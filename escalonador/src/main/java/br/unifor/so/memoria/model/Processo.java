@@ -17,7 +17,7 @@ public class Processo implements Serializable {
 	private Integer tempoInicial;
 	private Integer tempoFinal;
 	private Integer tamanho;
-	private int[] possiveisTamanhosDeMemoria = {32, 64, 128, 256, 512, 1024};
+	private int[] possiveisTamanhosDoProcesso = {32, 64, 128, 256, 512, 1024};
 
 	private Integer tempoAindaQueFalta;
 
@@ -25,9 +25,23 @@ public class Processo implements Serializable {
 		Principal.codigo++;
 		this.codigo = Principal.codigo;
 		this.tempoInicial = 0;
+		gerarTamanho();
 		gerarTempoDeExecucao();
 	}
 
+	public JLabel montarDesenhoDoProcesso() {
+		StringBuilder sb = new StringBuilder();
+		JLabel label = new JLabel();
+		sb.append("<html>Id: " + this.codigo + "<br>");
+		sb.append("Tempo Inicial: " + this.tempoInicial + "<br>");
+		sb.append("Tempo Final: " + this.tempoFinal + "<br>");
+		sb.append("Tamanho: " + this.tamanho + "<br></html>");
+		label.setText(sb.toString());
+		label.setForeground(Color.BLUE);
+		label.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		return label;
+	}
+	
 	private void gerarTempoDeExecucao() {
 		Random r = new Random();
 		int tempoGerado = r.nextInt(30);
@@ -35,31 +49,6 @@ public class Processo implements Serializable {
 			gerarTempoDeExecucao();
 
 		this.tempoFinal = tempoGerado;
-	}
-
-	public JLabel montarDesenhoDoProcesso() {
-		StringBuilder sb = new StringBuilder();
-		JLabel label = new JLabel();
-		sb.append("<html>Id: " + this.codigo + "<br>");
-		sb.append("TI: " + this.tempoInicial + "<br>");
-		sb.append("TF: " + this.tempoFinal + "<br></html>");
-		label.setText(sb.toString());
-		label.setForeground(Color.BLUE);
-		label.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-		return label;
-	}
-
-	public JLabel montarDesenhoDoProcessoComPrioridade() {
-		StringBuilder sb = new StringBuilder();
-		JLabel label = new JLabel();
-		sb.append("<html>Id: " + this.codigo + "<br>");
-		sb.append("TI: " + this.tempoInicial + "<br>");
-		sb.append("TF: " + this.tempoFinal + "<br>");
-		sb.append("TM: " + this.tamanho + "<br></html>");
-		label.setText(sb.toString());
-		label.setForeground(Color.BLUE);
-		label.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-		return label;
 	}
 
 	public void processamento() {
@@ -81,7 +70,7 @@ public class Processo implements Serializable {
 	public void gerarTamanho() {
 		Random r = new Random();
 		int valorAleatorio = r.nextInt(5);
-		this.tamanho = possiveisTamanhosDeMemoria[valorAleatorio];
+		this.tamanho = possiveisTamanhosDoProcesso[valorAleatorio];
 	}
 
 //	@Override

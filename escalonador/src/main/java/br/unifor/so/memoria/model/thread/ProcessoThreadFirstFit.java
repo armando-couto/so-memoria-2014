@@ -3,6 +3,7 @@ package br.unifor.so.memoria.model.thread;
 import javax.swing.JPanel;
 
 import br.unifor.so.memoria.Principal;
+import br.unifor.so.memoria.model.Bloco;
 import br.unifor.so.memoria.model.Processo;
 
 public class ProcessoThreadFirstFit extends Thread {
@@ -13,26 +14,27 @@ public class ProcessoThreadFirstFit extends Thread {
 		while (checar) {
 			JPanel panel = new JPanel();
 			for (int i = 0; i < Principal.processosEmExecucao.size(); i++) {
-				Processo processo = Principal.processosEmExecucao.get(i);
-				processo.processamento();
-				if (processo.checarSeOTempoZerou()) {
-					Principal.processosEmExecucao.remove(processo);
+				Bloco bloco = Principal.processosEmExecucao.get(i);
+				bloco.getProcesso().processamento();
+				if (bloco.getProcesso().checarSeOTempoZerou()) {
+//					Principal.processosEmExecucao.remove(bloco);
 					if (!Principal.processosAptos.isEmpty()) {
-						panel.add(Principal.processosAptos.get(0).montarDesenhoDoProcessoComPrioridade());
-						Principal.processosEmExecucao.add(i, Principal.processosAptos.get(0));
+						panel.add(Principal.processosEmExecucao.get(0).montarDesenhoDoBloco());
+						Bloco bloco3 = Principal.processosEmExecucao.get(i);
+						bloco3.setProcesso(Principal.processosAptos.get(0));
+						
 						Principal.processosAptos.remove(0);
-
 						Principal.paAProcessar.removeAll();
 
 						JPanel panelAptos = new JPanel();
 						for (Processo processoAptos : Principal.processosAptos) {
-							panelAptos.add(processoAptos.montarDesenhoDoProcessoComPrioridade());
+							panelAptos.add(processoAptos.montarDesenhoDoProcesso());
 						}
 						Principal.reorganizarAProcessar(panelAptos);
 					}
 				} else {
-					panel.add(Principal.processosEmExecucao.get(i).montarDesenhoDoProcessoComPrioridade());
-					Principal.processosEmExecucao.set(i, processo);
+					panel.add(Principal.processosEmExecucao.get(i).montarDesenhoDoBloco());
+					Principal.processosEmExecucao.set(i, bloco);
 				}
 			}
 			Principal.reorganizarProcessando(panel);

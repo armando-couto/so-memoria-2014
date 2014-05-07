@@ -16,6 +16,7 @@ import br.unifor.so.memoria.algoritmo.constant.Algoritmo;
 import br.unifor.so.memoria.component.BotaoIniciar;
 import br.unifor.so.memoria.component.BotaoNovoProcesso;
 import br.unifor.so.memoria.component.ComboBoxSelecao;
+import br.unifor.so.memoria.model.Bloco;
 import br.unifor.so.memoria.model.Processo;
 
 public class Principal extends JFrame {
@@ -26,15 +27,17 @@ public class Principal extends JFrame {
 	
 	public static int codigo = 0;
 
-	public static List<Processo> processosEmExecucao;
+	public static List<Bloco> processosEmExecucao;
 	public static List<Processo> processosAptos;
+	
+	public static int sobrou;
 
 	public static JPanel paParametros;
 	public static JPanel paProcessando;
 	public static JScrollPane spaProcessando;
 	public static JPanel paAProcessar;
 	public static JScrollPane spaAProcessar;
-	public static JTextField tfNucleos;
+	public static JTextField tfTamanhoMemoria;
 	public static JTextField tfProcessos;
 	public static Algoritmo algoritmoENUM;
 	
@@ -47,7 +50,7 @@ public class Principal extends JFrame {
 	public Principal() {
 		setTitle("Memória");
 		getContentPane().setLayout(null);
-
+		
 		this.setSize(850, 430);
 		spaProcessando = new JScrollPane(paProcessando);
 		spaAProcessar = new JScrollPane(paAProcessar);
@@ -65,7 +68,7 @@ public class Principal extends JFrame {
 
 		this.acoes();
 	}
-
+	
 	private void panelParametros() {
 		paParametros = new JPanel();
 		paParametros.setBorder(new TitledBorder(null, "Par\u00E2metros ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -77,7 +80,7 @@ public class Principal extends JFrame {
 	private void panelProcessando() {
 		paProcessando = new JPanel();
 		paProcessando.setBorder(new TitledBorder(null, "Processando ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		paProcessando.setBounds(17, 151, 819, 118);
+		paProcessando.setBounds(17, 116, 819, 153);
 		getContentPane().add(paProcessando);
 		paProcessando.setLayout(new BorderLayout(0, 0));
 	}
@@ -99,10 +102,10 @@ public class Principal extends JFrame {
 		lbTotalMemoria.setBounds(6, 24, 117, 16);
 		paParametros.add(lbTotalMemoria);
 
-		tfNucleos = new JTextField();
-		tfNucleos.setBounds(120, 18, 132, 28);
-		paParametros.add(tfNucleos);
-		tfNucleos.setColumns(100);
+		tfTamanhoMemoria = new JTextField();
+		tfTamanhoMemoria.setBounds(120, 18, 132, 28);
+		paParametros.add(tfTamanhoMemoria);
+		tfTamanhoMemoria.setColumns(100);
 	}
 
 	private void processos() {
