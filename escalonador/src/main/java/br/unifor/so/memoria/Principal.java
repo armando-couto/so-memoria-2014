@@ -25,7 +25,8 @@ public class Principal extends JFrame {
 
 	public static Thread processamento;
 	
-	public static int codigo = 0;
+	public static int codigoProcesso = 0;
+	public static int codigoBloco = 0;
 
 	public static List<Bloco> processosEmExecucao;
 	public static List<Processo> processosAptos;

@@ -17,20 +17,39 @@ public class ProcessoThreadFirstFit extends Thread {
 				Bloco bloco = Principal.processosEmExecucao.get(i);
 				bloco.getProcesso().processamento();
 				if (bloco.getProcesso().checarSeOTempoZerou()) {
-//					Principal.processosEmExecucao.remove(bloco);
+					Principal.sobrou += Principal.processosEmExecucao.get(i).getTamanhoTotal();
+					// Principal.processosEmExecucao.remove(bloco);
 					if (!Principal.processosAptos.isEmpty()) {
 						panel.add(Principal.processosEmExecucao.get(0).montarDesenhoDoBloco());
 						Bloco bloco3 = Principal.processosEmExecucao.get(i);
-						bloco3.setProcesso(Principal.processosAptos.get(0));
-						
-						Principal.processosAptos.remove(0);
-						Principal.paAProcessar.removeAll();
 
-						JPanel panelAptos = new JPanel();
-						for (Processo processoAptos : Principal.processosAptos) {
-							panelAptos.add(processoAptos.montarDesenhoDoProcesso());
+						if (Principal.sobrou >= bloco3.getTamanhoTotal()) {
+							bloco3.setProcesso(Principal.processosAptos.get(0));
+
+							Principal.processosAptos.remove(0);
+							Principal.paAProcessar.removeAll();
+
+							JPanel panelAptos = new JPanel();
+							for (Processo processoAptos : Principal.processosAptos) {
+								panelAptos.add(processoAptos.montarDesenhoDoProcesso());
+							}
+							Principal.reorganizarAProcessar(panelAptos);
+						} else {
+							for (Processo processo : Principal.processosAptos) {
+								if (Principal.sobrou >= processo.getTamanho()) {
+									bloco3.setProcesso(processo);
+
+									Principal.processosAptos.remove(0);
+									Principal.paAProcessar.removeAll();
+
+									JPanel panelAptos = new JPanel();
+									for (Processo processoAptos : Principal.processosAptos) {
+										panelAptos.add(processoAptos.montarDesenhoDoProcesso());
+									}
+									Principal.reorganizarAProcessar(panelAptos);
+								}
+							}
 						}
-						Principal.reorganizarAProcessar(panelAptos);
 					}
 				} else {
 					panel.add(Principal.processosEmExecucao.get(i).montarDesenhoDoBloco());

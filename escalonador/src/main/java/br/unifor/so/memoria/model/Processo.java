@@ -22,8 +22,8 @@ public class Processo implements Serializable {
 	private Integer tempoAindaQueFalta;
 
 	public Processo() {
-		Principal.codigo++;
-		this.codigo = Principal.codigo;
+		Principal.codigoProcesso++;
+		this.codigo = Principal.codigoProcesso;
 		this.tempoInicial = 0;
 		gerarTamanho();
 		gerarTempoDeExecucao();

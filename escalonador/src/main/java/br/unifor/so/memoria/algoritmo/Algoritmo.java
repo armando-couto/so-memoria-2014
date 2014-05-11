@@ -1,5 +1,8 @@
 package br.unifor.so.memoria.algoritmo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JPanel;
 
 import br.unifor.so.memoria.Principal;
@@ -20,32 +23,22 @@ public abstract class Algoritmo {
 		Principal.paProcessando.removeAll();
 		int var = Integer.parseInt(Principal.tfTamanhoMemoria.getText());
 		Principal.sobrou = var;
-		int i = 0;
-		boolean boo = true;
-		while (boo) {
+		
+		List<Processo> processos = new ArrayList<Processo>();
+		for (Processo processo : Principal.processosAptos) {
 			Bloco bloco = new Bloco();
-			bloco.setProcesso(Principal.processosAptos.get(i));
+			bloco.setProcesso(processo);
 			bloco.setTamanhoTotal(bloco.getProcesso().getTamanho());
 			if ((Principal.sobrou -= bloco.getTamanhoTotal()) < 0) {
 				break;
 			} else {
 				Principal.processosEmExecucao.add(bloco);
-				panel.add(Principal.processosEmExecucao.get(i).montarDesenhoDoBloco());
-				i++;
+				panel.add(Principal.processosEmExecucao.get(0).montarDesenhoDoBloco());
+				processos.add(processo);
 			}
 		}
-//		for (int i = 0; i < var; i++) {
-//			Bloco bloco = new Bloco();
-//			bloco.setProcesso(Principal.processosAptos.get(i));
-//			Principal.processosEmExecucao.add(bloco);
-//			panel.add(Principal.processosEmExecucao.get(i).montarDesenhoDoBloco());
-//		}
+		Principal.processosAptos.removeAll(processos);
 		Principal.reorganizarProcessandoClasse(panel);
-	}
-	
-	private boolean checar() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	public void montarProcessos() {

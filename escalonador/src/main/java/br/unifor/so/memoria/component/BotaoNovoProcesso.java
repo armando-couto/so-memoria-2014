@@ -2,11 +2,9 @@ package br.unifor.so.memoria.component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 
 import br.unifor.so.memoria.Principal;
 import br.unifor.so.memoria.algoritmo.FirstFit;
-import br.unifor.so.memoria.model.Bloco;
 
 public class BotaoNovoProcesso implements ActionListener {
 
@@ -19,9 +17,8 @@ public class BotaoNovoProcesso implements ActionListener {
 //			mergeFit.montarProcessos();
 			break;
 		case 2:
-//			BestFit bestFit = new BestFit();
-//			bestFit.criarProcessos();
-//			bestFit.montarProcessos();
+			FirstFit firstFit = new FirstFit();
+			firstFit.criarProcessos();
 			break;
 		case 3:
 //			QuickFit quickFit = new QuickFit();
@@ -29,9 +26,7 @@ public class BotaoNovoProcesso implements ActionListener {
 //			quickFit.montarProcessos();
 			break;
 		case 4:
-			FirstFit firstFit = new FirstFit();
-			firstFit.criarProcessos();
-			Principal.processosEmExecucao = new LinkedList<Bloco>();
+			
 			break;
 		case 5:
 //			WorstFit worstFit = new WorstFit();

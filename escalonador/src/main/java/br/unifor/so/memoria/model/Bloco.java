@@ -6,6 +6,8 @@ import java.io.Serializable;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
+import br.unifor.so.memoria.Principal;
+
 public class Bloco implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,7 +18,8 @@ public class Bloco implements Serializable {
 	private Processo processo;
 	
 	public Bloco() {
-		
+		Principal.codigoBloco++;
+		this.codigo = Principal.codigoBloco;
 	}
 
 	public JLabel montarDesenhoDoBloco() {

@@ -11,7 +11,7 @@ public class ComboBoxSelecao implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Zera o código do ID quando troca.
-		Principal.codigo = 0;
+		Principal.codigoProcesso = 0;
 		switch (Principal.cbAlgoritmo.getSelectedItem().toString()) {
 		case "Selecione":
 			break;
