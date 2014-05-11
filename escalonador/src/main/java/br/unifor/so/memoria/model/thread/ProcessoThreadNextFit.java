@@ -9,7 +9,7 @@ import br.unifor.so.memoria.Principal;
 import br.unifor.so.memoria.model.Bloco;
 import br.unifor.so.memoria.model.Processo;
 
-public class ProcessoThreadFirstFit extends Thread {
+public class ProcessoThreadNextFit extends Thread {
 
 	@SuppressWarnings("static-access")
 	public void run() {

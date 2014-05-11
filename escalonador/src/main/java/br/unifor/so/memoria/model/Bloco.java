@@ -27,7 +27,7 @@ public class Bloco implements Serializable {
 		JLabel label = new JLabel();
 		sb.append("<html>Id: " + this.codigo + "<br>");
 		sb.append("Tamanho Total: " + this.tamanhoTotal + "<br>");
-		sb.append("Tamanho Total Usado: " + this.tamanhoTotalUsando + "<br>");
+//		sb.append("Tamanho Total Usado: " + this.tamanhoTotalUsando + "<br>");
 		sb.append("Processo Tamanho: " + this.processo.getTamanho() + "<br>");
 		sb.append("Processo Tempo Inicial: " + this.processo.getTempoInicial() + "<br>");
 		sb.append("Processo Tempo Final: " + this.processo.getTempoFinal() + "<br></html>");
