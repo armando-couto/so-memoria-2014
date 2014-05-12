@@ -64,7 +64,6 @@ public class Principal extends JFrame {
 
 		this.totalMemoria();
 		this.processos();
-		this.quantum();
 		this.algoritmo();
 
 		this.acoes();
@@ -118,9 +117,6 @@ public class Principal extends JFrame {
 		tfProcessos.setBounds(120, 46, 132, 28);
 		paParametros.add(tfProcessos);
 		tfProcessos.setColumns(100);
-	}
-
-	private void quantum() {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
