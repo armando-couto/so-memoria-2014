@@ -21,22 +21,36 @@ public abstract class Algoritmo {
 	public void montarMemoria() {
 		JPanel panel = new JPanel();
 		Principal.paProcessando.removeAll();
-		int var = Integer.parseInt(Principal.tfTamanhoMemoria.getText());
-		Principal.sobrou = var;
+		int sobrou = Integer.parseInt(Principal.tfTamanhoMemoria.getText());
+		Principal.sobrou = sobrou;
 		
 		List<Processo> processos = new ArrayList<Processo>();
 		for (Processo processo : Principal.processosAptos) {
 			Bloco bloco = new Bloco();
 			bloco.setProcesso(processo);
 			bloco.setTamanhoTotal(bloco.getProcesso().getTamanho());
-			if ((Principal.sobrou -= bloco.getTamanhoTotal()) < 0) {
-				break;
-			} else {
+			bloco.setTamanhoTotalUsando(bloco.getProcesso().getTamanho());
+			
+			sobrou = Principal.sobrou;
+			
+			if ((sobrou -= bloco.getTamanhoTotal()) >= 0) {
+				Principal.sobrou -= bloco.getTamanhoTotal();
 				Principal.processosEmExecucao.add(bloco);
 				panel.add(Principal.processosEmExecucao.get(0).montarDesenhoDoBloco());
 				processos.add(processo);
+
+			} else {
+				for (Bloco b : Principal.processosEmExecucao) {
+					if (b.getProcesso().isJaSomou() && processo.getTamanho() <= b.getTamanhoTotal()) {
+						panel.add(b.montarDesenhoDoBloco());
+
+						b.setProcesso(processo);
+						b.setTamanhoTotalUsando(processo.getTamanho());
+					}
+				}
 			}
 		}
+		
 		Principal.processosAptos.removeAll(processos);
 		Principal.reorganizarProcessandoClasse(panel);
 	}

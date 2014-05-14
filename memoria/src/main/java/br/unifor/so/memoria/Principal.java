@@ -42,6 +42,8 @@ public class Principal extends JFrame {
 	public static JTextField tfProcessos;
 	public static Algoritmo algoritmoENUM;
 	
+	public static JLabel lblLabelTamanhoOriginal;
+	
 	@SuppressWarnings("rawtypes")
 	public static JComboBox cbAlgoritmo;
 	public static JButton btnIniciar;
@@ -95,6 +97,14 @@ public class Principal extends JFrame {
 		JLabel lblarmandocouto = new JLabel("©ArmandoCouto");
 		lblarmandocouto.setBounds(727, 386, 106, 16);
 		getContentPane().add(lblarmandocouto);
+		
+		JLabel lblMemriaSobrando = new JLabel("Memória Sobrando:");
+		lblMemriaSobrando.setBounds(17, 386, 129, 16);
+		getContentPane().add(lblMemriaSobrando);
+		
+		lblLabelTamanhoOriginal = new JLabel("");
+		lblLabelTamanhoOriginal.setBounds(144, 386, 61, 16);
+		getContentPane().add(lblLabelTamanhoOriginal);
 	}
 
 	private void totalMemoria() {
@@ -152,23 +162,26 @@ public class Principal extends JFrame {
 	}
 	
 	public static void reorganizarAProcessar(JPanel panel) {
-		Principal.paAProcessar.add(new JScrollPane(panel));
-		Principal.paAProcessar.repaint();
-		Principal.paAProcessar.revalidate();
+		lblLabelTamanhoOriginal.setText(String.valueOf(sobrou));
+		lblLabelTamanhoOriginal.setText(String.valueOf(sobrou));
+		paAProcessar.add(new JScrollPane(panel));
+		paAProcessar.repaint();
+		paAProcessar.revalidate();
 	}
 	
 	public static void reorganizarProcessando(JPanel panel) {
-		Principal.paProcessando.removeAll();
-		Principal.paProcessando.add(new JScrollPane(panel));
-		Principal.paProcessando.repaint();
-		Principal.paProcessando.revalidate();
+		lblLabelTamanhoOriginal.setText(String.valueOf(sobrou));
+		paProcessando.removeAll();
+		paProcessando.add(new JScrollPane(panel));
+		paProcessando.repaint();
+		paProcessando.revalidate();
 	}
 	
 	public static void reorganizarProcessandoClasse(JPanel panel) {
-		Principal.processosAptos.removeAll(Principal.processosEmExecucao);
-		Principal.paProcessando.add(new JScrollPane(panel));
-		Principal.paProcessando.repaint();
-		Principal.paProcessando.revalidate();
+		processosAptos.removeAll(Principal.processosEmExecucao);
+		paProcessando.add(new JScrollPane(panel));
+		paProcessando.repaint();
+		paProcessando.revalidate();
 	}
 
 	public static void main(String[] args) {

@@ -23,6 +23,7 @@ public class BotaoNovoProcesso implements ActionListener {
 		case 2:
 			FirstFit firstFit = new FirstFit();
 			firstFit.criarProcessos();
+			firstFit.montarProcessos();
 			break;
 		case 3:
 			QuickFit quickFit = new QuickFit();

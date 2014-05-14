@@ -17,7 +17,8 @@ public class Processo implements Serializable {
 	private Integer tempoInicial;
 	private Integer tempoFinal;
 	private Integer tamanho;
-	private int[] possiveisTamanhosDoProcesso = {32, 64, 128, 256, 512, 1024};
+	private int[] possiveisTamanhosDoProcesso = { 32, 64, 128, 256, 512, 1024 };
+	private boolean jaSomou = false;
 
 	private Integer tempoAindaQueFalta;
 
@@ -41,7 +42,7 @@ public class Processo implements Serializable {
 		label.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		return label;
 	}
-	
+
 	private void gerarTempoDeExecucao() {
 		Random r = new Random();
 		int tempoGerado = r.nextInt(30);
@@ -73,16 +74,23 @@ public class Processo implements Serializable {
 		this.tamanho = possiveisTamanhosDoProcesso[valorAleatorio];
 	}
 
-//	@Override
-//	public int compare(Processo o1, Processo o2) {
-//		if (Principal.algoritmoENUM == Algoritmo.SRT) {
-//			return o1.getTempoAindaQueFalta().compareTo(o2.getTempoAindaQueFalta());
-//		} else if (Principal.algoritmoENUM == Algoritmo.N_FIFO) {
-//			return o1.getPrioridade().compareTo(o2.getPrioridade());
-//		} else {
-//			return o1.getTempoFinal().compareTo(o2.getTempoFinal());
-//		}
-//	}
+	public void limparDados() {
+		codigo = 0;
+		tempoInicial = 0;
+		tempoFinal = 0;
+		tamanho = 0;
+	}
+
+	// @Override
+	// public int compare(Processo o1, Processo o2) {
+	// if (Principal.algoritmoENUM == Algoritmo.SRT) {
+	// return o1.getTempoAindaQueFalta().compareTo(o2.getTempoAindaQueFalta());
+	// } else if (Principal.algoritmoENUM == Algoritmo.N_FIFO) {
+	// return o1.getPrioridade().compareTo(o2.getPrioridade());
+	// } else {
+	// return o1.getTempoFinal().compareTo(o2.getTempoFinal());
+	// }
+	// }
 
 	public Integer getCodigo() {
 		return codigo;
@@ -122,5 +130,13 @@ public class Processo implements Serializable {
 
 	public void setTamanho(Integer tamanho) {
 		this.tamanho = tamanho;
+	}
+
+	public boolean isJaSomou() {
+		return jaSomou;
+	}
+
+	public void setJaSomou(boolean jaSomou) {
+		this.jaSomou = jaSomou;
 	}
 }
