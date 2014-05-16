@@ -70,27 +70,16 @@ public class Processo implements Serializable {
 
 	public void gerarTamanho() {
 		Random r = new Random();
-		int valorAleatorio = r.nextInt(5);
+		int valorAleatorio = r.nextInt(6);
 		this.tamanho = possiveisTamanhosDoProcesso[valorAleatorio];
 	}
 
 	public void limparDados() {
-		codigo = 0;
+		codigo = null;
 		tempoInicial = 0;
 		tempoFinal = 0;
 		tamanho = 0;
 	}
-
-	// @Override
-	// public int compare(Processo o1, Processo o2) {
-	// if (Principal.algoritmoENUM == Algoritmo.SRT) {
-	// return o1.getTempoAindaQueFalta().compareTo(o2.getTempoAindaQueFalta());
-	// } else if (Principal.algoritmoENUM == Algoritmo.N_FIFO) {
-	// return o1.getPrioridade().compareTo(o2.getPrioridade());
-	// } else {
-	// return o1.getTempoFinal().compareTo(o2.getTempoFinal());
-	// }
-	// }
 
 	public Integer getCodigo() {
 		return codigo;

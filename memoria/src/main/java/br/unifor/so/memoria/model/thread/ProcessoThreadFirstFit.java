@@ -25,8 +25,6 @@ public class ProcessoThreadFirstFit extends Thread {
 					bloco.getProcesso().setJaSomou(true);
 
 					int tamanhoOriginal = Integer.parseInt(Principal.tfTamanhoMemoria.getText());
-//					if (tamanhoOriginal >= Principal.sobrou)
-//						Principal.sobrou += bloco.getProcesso().getTamanho();
 
 					if (tamanhoOriginal < Principal.sobrou)
 						Principal.sobrou = tamanhoOriginal;

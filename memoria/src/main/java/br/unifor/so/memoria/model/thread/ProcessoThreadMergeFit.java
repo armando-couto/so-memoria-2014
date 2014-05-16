@@ -2,6 +2,7 @@ package br.unifor.so.memoria.model.thread;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.JPanel;
 
@@ -19,44 +20,91 @@ public class ProcessoThreadMergeFit extends Thread {
 			for (int i = 0; i < Principal.processosEmExecucao.size(); i++) {
 				Bloco bloco = Principal.processosEmExecucao.get(i);
 				bloco.getProcesso().processamento();
-				if (bloco.getProcesso().checarSeOTempoZerou()) {
-					Principal.sobrou += Principal.processosEmExecucao.get(i).getTamanhoTotal();
-					// Principal.processosEmExecucao.remove(bloco);
-					if (!Principal.processosAptos.isEmpty()) {
-						panel.add(Principal.processosEmExecucao.get(0).montarDesenhoDoBloco());
-						Bloco bloco3 = Principal.processosEmExecucao.get(i);
 
-						if (Principal.sobrou >= bloco3.getTamanhoTotal()) {
-							bloco3.setProcesso(Principal.processosAptos.get(0));
+				if (bloco.getProcesso().checarSeOTempoZerou() && !bloco.getProcesso().isJaSomou()) {
 
-							Principal.processosAptos.remove(0);
+					bloco.getProcesso().setJaSomou(true);
+
+					int tamanhoOriginal = Integer.parseInt(Principal.tfTamanhoMemoria.getText());
+
+					if (tamanhoOriginal < Principal.sobrou)
+						Principal.sobrou = tamanhoOriginal;
+
+					List<Processo> processos = new ArrayList<Processo>();
+					for (Processo processo : Principal.processosAptos) {
+
+						int sobrou = Principal.sobrou;
+
+						if ((sobrou -= processo.getTamanho()) >= 0) {
+							Principal.sobrou -= processo.getTamanho();
+
+							panel.add(Principal.processosEmExecucao.get(0).montarDesenhoDoBloco());
+							Bloco bloco3 = Principal.processosEmExecucao.get(i);
+
+							bloco3.setProcesso(processo);
+							bloco3.setTamanhoTotalUsando(processo.getTamanho());
+
+							processos.add(processo);
 							Principal.paAProcessar.removeAll();
-						} else {
-							List<Processo> processos = new ArrayList<Processo>();
-							
-							for (Processo processo : Principal.processosAptos) {
-								if (Principal.sobrou >= processo.getTamanho()) {
-									bloco3.setProcesso(processo);
 
-									processos.add(processo);
-									Principal.paAProcessar.removeAll();
+						} else {
+							for (int j = 0; j < Principal.processosEmExecucao.size(); j++) {
+								Bloco b = Principal.processosEmExecucao.get(j);
+								if (b.getProcesso().isJaSomou()) {
+									if (processo.getTamanho() <= b.getTamanhoTotal()) {
+										panel.add(b.montarDesenhoDoBloco());
+	
+										b.setProcesso(processo);
+										b.setTamanhoTotalUsando(processo.getTamanho());
+	
+										Principal.paAProcessar.removeAll();
+									} else {
+										ListIterator<Bloco> blocos = (ListIterator<Bloco>) Principal.processosEmExecucao.iterator();
+										
+										Bloco bloco2;
+										while(blocos.hasNext()) {
+											bloco2 = blocos.next();
+											
+											if (bloco2.getProcesso().getCodigo() == null) {
+												
+												Bloco blocoNext = blocos.next();
+												b.setTamanhoTotal(b.getTamanhoTotal() + blocoNext.getProcesso().getTamanho());
+												
+												if (processo.getTamanho() <= b.getTamanhoTotal()) {
+													panel.add(b.montarDesenhoDoBloco());
+													
+													b.setProcesso(processo);
+													b.setTamanhoTotalUsando(processo.getTamanho());
+													
+													Principal.paAProcessar.removeAll();
+												}
+											}
+										}
+
+									}
 								}
 							}
-							
-							Principal.processosAptos.removeAll(processos);
 						}
-						
-						JPanel panelAptos = new JPanel();
-						for (Processo processoAptos : Principal.processosAptos) {
-							panelAptos.add(processoAptos.montarDesenhoDoProcesso());
-						}
-						Principal.reorganizarAProcessar(panelAptos);
 					}
+
+					if (processos.isEmpty()) {
+						bloco.getProcesso().limparDados();
+					}
+
+					Principal.processosAptos.removeAll(processos);
+
 				} else {
 					panel.add(Principal.processosEmExecucao.get(i).montarDesenhoDoBloco());
 					Principal.processosEmExecucao.set(i, bloco);
 				}
 			}
+
+			JPanel panelAptos = new JPanel();
+			for (Processo processoAptos : Principal.processosAptos) {
+				panelAptos.add(processoAptos.montarDesenhoDoProcesso());
+			}
+			Principal.reorganizarAProcessar(panelAptos);
+
 			Principal.reorganizarProcessando(panel);
 
 			try {
